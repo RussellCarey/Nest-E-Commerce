@@ -20,14 +20,8 @@ export abstract class BaseEntity {
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: 'varchar', length: 300 })
-  createdBy: string;
-
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
-
-  @Column({ type: 'varchar', length: 300 })
-  lastChangedBy: string;
 
   @Column({ type: 'varchar', length: 300, nullable: true })
   internalComment: string | null;
