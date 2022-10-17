@@ -36,12 +36,13 @@ class ConfigService {
       username: this.getValue('PROD_DB_USERNAME'),
       password: this.getValue('PROD_DB_PW'),
       database: this.getValue('PROD_DB_NAME'),
-      entities: ['src/*/*/*.entity.{ts,js}'],
+      entities: ['dist/entities/*.entity.{ts,js}'],
       migrationsTableName: 'migration',
-      migrations: ['src/migration/*.ts'],
+      migrations: ['./src/migration/**/*.ts'],
+      synchronize: !this.isProduction(),
 
       //   cli: {
-      //     migrationsDir: 'src/migration',
+      //     migrationsDir: 'src/migrations',
       //   },
 
       ssl: this.isProduction(),

@@ -1,4 +1,5 @@
 // base.entity.ts
+// https://dbdiagram.io/d/634d0033f0018a1c5f18a9a9
 import {
   PrimaryGeneratedColumn,
   Column,
@@ -17,13 +18,13 @@ export abstract class BaseEntity {
   isArchived: boolean;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  createDateTime: Date;
+  createdAt: Date;
 
   @Column({ type: 'varchar', length: 300 })
   createdBy: string;
 
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  lastChangedDateTime: Date;
+  updatedAt: Date;
 
   @Column({ type: 'varchar', length: 300 })
   lastChangedBy: string;
