@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 class ProductDTO {
+  @IsNotEmpty()
   @IsString()
   product_name: string;
 
@@ -26,7 +27,6 @@ class ProductDTO {
   @IsNumber()
   seller_id: number;
 
-  @IsNumber()
   buyer_id: number;
 
   @IsNotEmpty()

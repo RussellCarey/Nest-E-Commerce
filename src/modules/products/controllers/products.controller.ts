@@ -16,23 +16,35 @@ export class ProductsController {
 
   // Get single product
   @Get('')
-  getProduct(@Param('productId', ParseIntPipe) productId: number): any {
-    return this.productService.getProduct(productId);
+  async getProduct(
+    @Param('productId', ParseIntPipe) productId: number,
+  ): Promise<any> {
+    const product = await this.productService.getProduct(productId);
+    return { message: '', data: product };
   }
 
   // Get all products
   @Get('all')
-  getAllProducts(
+  async getAllProducts(
     @Query('skip', ParseIntPipe) skip?: number,
-    @Query('page', ParseIntPipe) page?: number,
-  ): any {
+    @Query('take', ParseIntPipe) take?: number,
+  ): Promise<any> {
     console.log(skip);
-    console.log(page);
-    // return this.productService.getProducts();
-    return { message: 'hello' };
+    console.log(take);
+    const products = await this.productService.getAllProducts({
+      skip: skip,
+      take: take,
+    });
+    return { message: 'Retrieved Products', data: products };
   }
 
   // Create product
+  @Post('new')
+  async create(@Body() body: ProductDTO) {
+    console.log(body);
+    const createdProduct = await this.productService.createProduct(body);
+    return { message: `Created a new product`, data: createdProduct };
+  }
 
   // Delete product
 
@@ -43,24 +55,4 @@ export class ProductsController {
   // Get all product comments
 
   // Get product like count
-
-  // testing eget
-  @Get('getty')
-  getAllGetties(): any {
-    return { message: `This is from the get req all` };
-  }
-
-  // testing param
-  @Get('getty/:id')
-  getSingleGettie(@Param('id') id: number) {
-    return { message: `This is from the get req and id is ${id}` };
-  }
-
-  // testing post
-  @Post('new')
-  async create(@Body() body: ProductDTO) {
-    console.log(body);
-    const createdProduct = await this.productService.createProduct(body);
-    return { message: `Created a new product`, data: createdProduct };
-  }
 }

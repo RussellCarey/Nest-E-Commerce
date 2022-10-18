@@ -24,7 +24,7 @@ export class Product extends BaseEntity {
   price: number;
 
   @Column({ type: 'int', default: 0 })
-  dicount_percent: number;
+  discount_percent: number;
 
   @Column({ type: 'int', default: 0 })
   view_count: number;

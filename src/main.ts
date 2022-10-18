@@ -3,8 +3,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './modules/app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 
+import helmet from 'helmet';
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(process.env.PORT);
 }
