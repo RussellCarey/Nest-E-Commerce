@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
 } from 'typeorm';
+import { IsDate, IsString } from 'class-validator';
 
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -18,11 +19,14 @@ export abstract class BaseEntity {
   isArchived: boolean;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @IsDate()
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @IsDate()
   updatedAt: Date;
 
   @Column({ type: 'varchar', length: 300, nullable: true })
+  @IsString()
   internalComment: string | null;
 }
