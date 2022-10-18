@@ -9,8 +9,8 @@ import {
 import { IsDate, IsString } from 'class-validator';
 
 export abstract class BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;

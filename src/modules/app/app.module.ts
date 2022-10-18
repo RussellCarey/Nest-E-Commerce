@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from 'src/config/config.service';
-import { ProductsModule } from '../products/products.module';
+import { ProductsModule } from '../products/modules/products.module';
 
 // Need to add MODULES to the imports
 @Module({
