@@ -1,38 +1,40 @@
-import { IsNotEmpty, IsNumber, IsString, IsOptional } from 'class-validator';
+import { IsOptional, IsNumber, IsString } from 'class-validator';
 
-class ProductDTO {
-  @IsNotEmpty()
+class ProductUpdateDTO {
+  @IsOptional()
   @IsString()
   product_name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   description: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   image: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   price: number;
 
+  @IsOptional()
   @IsNumber()
   discount_percent: number;
 
+  @IsOptional()
   @IsNumber()
   view_count: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   seller_id: number;
 
   @IsOptional()
   buyer_id: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   category_id: number;
 }
 
-export { ProductDTO };
+export { ProductUpdateDTO };

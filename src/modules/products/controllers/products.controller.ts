@@ -6,11 +6,13 @@ import {
   Body,
   ParseIntPipe,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { OrderByPipe } from 'src/pipes/orderby.pipe';
 import { OptionalIntPipe } from 'src/pipes/optionalInt.pipe';
 import { ProductsService } from '../services/products.service';
 import { ProductDTO } from '../dtos/products.dto';
+import { ProductUpdateDTO } from '../dtos/productsUpdate.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -46,6 +48,19 @@ export class ProductsController {
     console.log(body);
     const createdProduct = await this.productService.createProduct(body);
     return { message: `Created a new product`, data: createdProduct };
+  }
+
+  @Patch(':productId')
+  async updateProduct(
+    @Body() body: ProductUpdateDTO,
+    @Param('productId', ParseIntPipe) productId: number,
+  ) {
+    console.log(body);
+    const updatedProduct = await this.productService.updateProduct(
+      productId,
+      body,
+    );
+    return { message: `Updated a product`, data: updatedProduct };
   }
 
   // Delete product
