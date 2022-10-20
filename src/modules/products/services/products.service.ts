@@ -11,18 +11,25 @@ export class ProductsService {
   ) {}
 
   async getProduct(id: number): Promise<Product> {
-    const product = await this.productRepository.findOneBy({
-      id: id,
-    });
+    const product = await this.productRepository.findOneBy({ id: id });
     return product;
   }
 
   async getAllProducts(params: {
     skip?: number;
     take?: number;
+    order?: any;
+    where?: any;
   }): Promise<Product[]> {
-    const { skip, take } = params;
-    const product = await this.productRepository.find({ skip, take });
+    const { skip, take, order, where } = params;
+    console.log(skip, take, order);
+
+    const product = await this.productRepository.find({
+      skip,
+      take,
+      order,
+      where,
+    });
     return product;
   }
 

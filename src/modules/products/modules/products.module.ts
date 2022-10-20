@@ -6,7 +6,6 @@ import { ProductsController } from '../controllers/products.controller';
 import { ProductsService } from '../services/products.service';
 
 @Module({
-  // Make it so we can inject
   imports: [TypeOrmModule.forFeature([Product])],
   controllers: [ProductsController],
   providers: [ProductsService],

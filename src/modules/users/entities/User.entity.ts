@@ -50,4 +50,17 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Product, (product) => product.seller_id)
   products: Product[];
+
+  // Functions
+  public set _id(id: number) {
+    this.id = id;
+  }
+
+  public get _email(): string {
+    return this.email;
+  }
+
+  public set _email(email: string) {
+    this.email = email;
+  }
 }

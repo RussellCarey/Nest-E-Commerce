@@ -1,33 +1,36 @@
-// import {
-//   ArgumentMetadata,
-//   BadGatewayException,
-//   BadRequestException,
-//   Injectable,
-//   PipeTransform,
-// } from '@nestjs/common';
-// import { ORDER_BY_ASC_DESC, ORDER_BY_FORMAT } from '../errors/errors.constants';
+import {
+  ArgumentMetadata,
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+  PipeTransform,
+} from '@nestjs/common';
 
-// /** Convert a string like "name asc, address desc" to { name: "asc", address: "desc" } */
-// @Injectable()
-// export class OrderByPipe implements PipeTransform {
-//   transform(value: string): Record<string, 'asc' | 'desc'> | undefined {
-//     if (value == null) return undefined;
+/** Convert a string like "name asc, address desc" to { name: "asc", address: "desc" } */
+@Injectable()
+export class OrderByPipe implements PipeTransform {
+  // orderBy=id:desc
+  transform(value: string): Record<string, 'ASC' | 'DESC'> | undefined {
+    if (value == null) return undefined;
 
-//     try {
-//       const rules = value.split(',').map((val) => val.trim());
+    try {
+      const queries = value.split(',').map((val) => val.trim());
+      const orderBy: Record<string, 'ASC' | 'DESC'> = {};
+      queries.forEach((query) => {
+        // One query should be id:desc
+        const [key, order] = query.split(':') as [string, 'asc' | 'desc'];
 
-//       const orderBy: Record<string, 'asc' | 'desc'> = {};
+        // Check we have correct values
+        if (!['asc', 'desc'].includes(order.toLocaleLowerCase())) {
+          throw new BadGatewayException('Failed order by');
+        }
 
-//       rules.forEach((rule) => {
-//         const [key, order] = rule.split(':') as [string, 'asc' | 'desc'];
-//         if (!['asc', 'desc'].includes(order.toLocaleLowerCase()))
-//           throw new BadGatewayException(ORDER_BY_ASC_DESC);
-//         orderBy[key] = order.toLocaleLowerCase() as 'asc' | 'desc';
-//       });
+        orderBy[key] = order.toLocaleUpperCase() as 'ASC' | 'DESC';
+      });
 
-//       return orderBy;
-//     } catch (_) {
-//       throw new BadRequestException(ORDER_BY_FORMAT);
-//     }
-//   }
-// }
+      return orderBy;
+    } catch (_) {
+      throw new BadRequestException('Failed order by');
+    }
+  }
+}

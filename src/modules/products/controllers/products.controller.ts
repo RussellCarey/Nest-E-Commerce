@@ -7,6 +7,8 @@ import {
   ParseIntPipe,
   Query,
 } from '@nestjs/common';
+import { OrderByPipe } from 'src/pipes/orderby.pipe';
+import { OptionalIntPipe } from 'src/pipes/optionalInt.pipe';
 import { ProductsService } from '../services/products.service';
 import { ProductDTO } from '../dtos/products.dto';
 
@@ -15,31 +17,31 @@ export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
   // Get single product
-  @Get('')
+  @Get(':productId')
   async getProduct(
     @Param('productId', ParseIntPipe) productId: number,
   ): Promise<any> {
     const product = await this.productService.getProduct(productId);
-    return { message: '', data: product };
+    return { message: 'Retrieved product', data: product };
   }
 
   // Get all products
-  @Get('all')
+  @Get()
   async getAllProducts(
-    @Query('skip', ParseIntPipe) skip?: number,
-    @Query('take', ParseIntPipe) take?: number,
+    @Query('skip', OptionalIntPipe) skip?: number,
+    @Query('take', OptionalIntPipe) take?: number,
+    @Query('order', OrderByPipe) order?: Record<string, 'ASC' | 'DESC'>,
   ): Promise<any> {
-    console.log(skip);
-    console.log(take);
     const products = await this.productService.getAllProducts({
-      skip: skip,
-      take: take,
+      skip,
+      take,
+      order,
     });
     return { message: 'Retrieved Products', data: products };
   }
 
   // Create product
-  @Post('new')
+  @Post()
   async create(@Body() body: ProductDTO) {
     console.log(body);
     const createdProduct = await this.productService.createProduct(body);
